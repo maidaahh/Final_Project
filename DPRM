@@ -214,3 +214,29 @@ public:
         }
     }
 };
+
+// Class for updating patient records
+class RecordUpdater {
+private:
+    map<string, vector<string>> patientRecords; // patient name -> list of diagnoses and treatments
+
+public:
+    // Method to add a diagnosis or treatment to a patient's record
+    void updatePatientRecord(const string& patientName, const string& update) {
+        patientRecords[patientName].push_back(update);
+        cout << "Patient record updated successfully!" << endl;
+    }
+
+    // Method to display patient's record
+    void displayPatientRecord(const string& patientName) {
+        map<string, vector<string>>::iterator it = patientRecords.find(patientName);
+        if (it != patientRecords.end()) {
+            cout << "Record of " << patientName << ":" << endl;
+            for (const string& entry : it->second) {
+                cout << "- " << entry << endl;
+            }
+        } else {
+            cout << "Patient not found." << endl;
+        }
+    }
+};
