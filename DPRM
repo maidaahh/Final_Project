@@ -317,3 +317,29 @@ public:
         }
     }
 };
+
+// Class for managing lab test results
+class LabTestManager {
+private:
+    map<string, vector<string>> labTestResults; // patient name -> list of lab test results
+
+public:
+    // Method to add lab test results for a patient
+    void addLabTestResults(const string& patientName, const string& results) {
+        labTestResults[patientName].push_back(results);
+        cout << "Lab test results added successfully!" << endl;
+    }
+
+    // Method to display lab test results for a patient
+    void displayLabTestResults(const string& patientName) {
+        map<string, vector<string>>::iterator it = labTestResults.find(patientName);
+        if (it != labTestResults.end()) {
+            cout << "Lab Test Results for " << patientName << ":" << endl;
+            for (const string& result : it->second) {
+                cout << "- " << result << endl;
+            }
+        } else {
+            cout << "Lab test results for " << patientName << " not found." << endl;
+        }
+    }
+};
