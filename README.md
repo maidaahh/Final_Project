@@ -1,12 +1,10 @@
-Title : "DOCTOR PATIENT RECORD MANAGEMENT"
+Topic : "DOCTOR PATIENT RECORD MANAGEMENT"
 
-Members :
-1. maidaahh
-2. amama
-
-Link to Github Repo : https://github.com/maidaahh/Final_Project.git
-
-list of integrated features :
+Group Memeber : 1.maidaahh
+                2.ammama
+Roll Number : 1. 23_st_029
+              2. 23_st_020
+List of intgrated features :
 1. Add user
 2. Login
 3. Patient Registration
@@ -28,4 +26,4 @@ list of integrated features :
 19. Add Lab Test Results
 20. Display Lab Test Results
 21. Search Patient Record by Name
-22. Search Patient Record by Date of Birth 
+22. Search Patient Record by Date of Birth
