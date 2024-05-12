@@ -317,3 +317,385 @@ public:
         }
     }
 };
+
+// Class for managing lab test results
+class LabTestManager {
+private:
+    map<string, vector<string>> labTestResults; // patient name -> list of lab test results
+
+public:
+    // Method to add lab test results for a patient
+    void addLabTestResults(const string& patientName, const string& results) {
+        labTestResults[patientName].push_back(results);
+        cout << "Lab test results added successfully!" << endl;
+    }
+
+    // Method to display lab test results for a patient
+    void displayLabTestResults(const string& patientName) {
+        map<string, vector<string>>::iterator it = labTestResults.find(patientName);
+        if (it != labTestResults.end()) {
+            cout << "Lab Test Results for " << patientName << ":" << endl;
+            for (const string& result : it->second) {
+                cout << "- " << result << endl;
+            }
+        } else {
+            cout << "Lab test results for " << patientName << " not found." << endl;
+        }
+    }
+};
+
+// Class for searching patient records
+class PatientRecordSearch {
+private:
+    map<string, pair<string, string>> patientDetails; // name -> (contact, date of birth) mapping
+
+public:
+    // Method to search patient record by name
+    void searchByName(const string& name) {
+        map<string, pair<string, string>>::iterator it = patientDetails.find(name);
+        if (it != patientDetails.end()) {
+            cout << "Patient Found:" << endl;
+            cout << "Name: " << it->first << endl;
+            cout << "Contact: " << it->second.first << endl;
+            cout << "Date of Birth: " << it->second.second << endl;
+        } else {
+            cout << "Patient not found." << endl;
+        }
+    }
+
+    // Method to search patient record by date of birth
+    void searchByDOB(const string& dob) {
+        for (const auto& patient : patientDetails) {
+            if (patient.second.second == dob) {
+                cout << "Patient Found:" << endl;
+                cout << "Name: " << patient.first << endl;
+                cout << "Contact: " << patient.second.first << endl;
+                cout << "Date of Birth: " << patient.second.second << endl;
+                return;
+            }
+        }
+        cout << "Patient not found." << endl;
+    }
+
+    // Method to add patient details
+    void addPatientDetails(const string& name, const string& contact, const string& dob) {
+        patientDetails[name] = make_pair(contact, dob);
+        cout << "Patient details added successfully!" << endl;
+    }
+};
+
+int main() {
+    UserAuthenticator authenticator;
+    PatientRegistration patientRegistration;
+    DoctorRegistration doctorRegistration;
+    PatientHistory patientHistory;
+    DoctorHistory doctorHistory;
+    AppointmentScheduler appointmentScheduler;
+    RecordUpdater recordUpdater;
+    MedicalHistory medicalHistory;
+    InvoiceManager invoiceManager;
+    MedicationManager medicationManager;
+    LabTestManager labTestManager;
+    PatientRecordSearch recordSearch;
+
+    int choice;
+    string username, password, role;
+    string name, contact, dob;
+    string history, date, patientName, update;
+    double amount;
+    string medication, testResults;
+
+    bool continueLoop = true;
+    while (continueLoop) {
+        cout << "Choose an option:" << endl;
+        cout << "1. Add user" << endl;
+        cout << "2. Login" << endl;
+        cout << "3. Patient Registration" << endl;
+        cout << "4. Doctor Registration" << endl;
+        cout << "5. Add Patient History" << endl;
+        cout << "6. Display Patient History" << endl;
+        cout << "7. Add Doctor History" << endl;
+        cout << "8. Display Doctor History" << endl;
+        cout << "9. Schedule Appointment" << endl;
+        cout << "10. Cancel Appointment" << endl;
+        cout << "11. Display Scheduled Appointments" << endl;
+        cout << "12. Update Patient Record" << endl;
+        cout << "13. Display Patient Record" << endl;
+        cout << "14. Add Medical History" << endl;
+        cout << "15. Display Medical History" << endl;
+        cout << "16. Generate Invoice" << endl;
+        cout << "17. Display Invoices" << endl;
+        cout << "18. Add Medication" << endl;
+        cout << "19. Display Medication" << endl;
+        cout << "20. Add Lab Test Results" << endl;
+        cout << "21. Display Lab Test Results" << endl;
+        cout << "22. Search Patient Record by Name" << endl;
+        cout << "23. Search Patient Record by Date of Birth" << endl;
+        cout << "24. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                // Prompt for username
+                cout << "Enter username: ";
+                cin >> username;
+
+                // Prompt for password
+                cout << "Enter password: ";
+                cin >> password;
+
+                // Prompt for role
+                cout << "Enter role (Doctor/Patient): ";
+                cin >> role;
+
+                // Add the user
+                authenticator.addUser(username, password, role);
+                break;
+
+            case 2:
+                // Prompt for username
+                cout << "Enter username: ";
+                cin >> username;
+
+                // Prompt for password
+                cout << "Enter password: ";
+                cin >> password;
+
+                // Authenticate the user
+                if(authenticator.authenticateUser(username, password)) {
+                    // Authorize the user
+                    string userRole = authenticator.authorizeUser(username);
+                    if (!userRole.empty()) {
+                        cout << "User role: " << userRole << endl;
+                    } else {
+                        cout << "Failed to authorize user." << endl;
+                    }
+                }
+                break;
+
+            case 3:
+                // Prompt for patient details
+                cout << "Enter patient name: ";
+                cin >> name;
+                cout << "Enter contact information: ";
+                cin >> contact;
+                cout << "Enter date of birth (DD/MM/YYYY): ";
+                cin >> dob;
+
+                // Register the patient
+                patientRegistration.registerPatient(name, contact, dob);
+                break;
+
+            case 4:
+                // Prompt for doctor details
+                cout << "Enter doctor name: ";
+                cin >> name;
+                cout << "Enter contact information: ";
+                cin >> contact;
+                cout << "Enter specialization: ";
+                cin >> dob;
+
+                // Register the doctor
+                doctorRegistration.registerDoctor(name, contact, dob);
+                break;
+
+            case 5:
+                // Prompt for patient name and history
+                cout << "Enter patient name: ";
+                cin >> name;
+                cout << "Enter patient history: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, history);
+
+                // Add patient history
+                patientHistory.addPatientHistory(name, history);
+                break;
+
+            case 6:
+                // Prompt for patient name and display history
+                cout << "Enter patient name: ";
+                cin >> name;
+
+                // Display patient history
+                patientHistory.displayPatientHistory(name);
+                break;
+
+            case 7:
+                // Prompt for doctor name and history
+                cout << "Enter doctor name: ";
+                cin >> name;
+                cout << "Enter doctor history: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, history);
+
+                // Add doctor history
+                doctorHistory.addDoctorHistory(name, history);
+                break;
+
+            case 8:
+                // Prompt for doctor name and display history
+                cout << "Enter doctor name: ";
+                cin >> name;
+
+                // Display doctor history
+                doctorHistory.displayDoctorHistory(name);
+                break;
+
+            case 9:
+                // Prompt for appointment details
+                cout << "Enter appointment date (YYYY-MM-DD): ";
+                cin >> date;
+                cout << "Enter patient name: ";
+                cin >> patientName;
+
+                // Schedule the appointment
+                appointmentScheduler.scheduleAppointment(date, patientName);
+                break;
+
+            case 10:
+                // Prompt for appointment date to cancel
+                cout << "Enter appointment date to cancel (YYYY-MM-DD): ";
+                cin >> date;
+
+                // Cancel the appointment
+                appointmentScheduler.cancelAppointment(date);
+                break;
+
+            case 11:
+                // Display scheduled appointments
+                appointmentScheduler.displayAppointments();
+                break;
+
+            case 12:
+                // Prompt for patient name and update
+                cout << "Enter patient name: ";
+                cin >> patientName;
+                cout << "Enter diagnosis or treatment to add: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, update);
+
+                // Update patient record
+                recordUpdater.updatePatientRecord(patientName, update);
+                break;
+
+            case 13:
+                // Prompt for patient name and display record
+                cout << "Enter patient name: ";
+                cin >> patientName;
+
+                // Display patient record
+                recordUpdater.displayPatientRecord(patientName);
+                break;
+
+            case 14:
+                // Prompt for patient name and medical history entry
+                cout << "Enter patient name: ";
+                cin >> patientName;
+                cout << "Enter medical history entry: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, history);
+
+                // Add medical history entry
+                medicalHistory.addMedicalHistory(patientName, history);
+                break;
+
+            case 15:
+                // Prompt for patient name and display medical history
+                cout << "Enter patient name: ";
+                cin >> patientName;
+
+                // Display medical history
+                medicalHistory.displayMedicalHistory(patientName);
+                break;
+
+            case 16:
+                // Prompt for patient name and amount
+                cout << "Enter patient name: ";
+                cin >> patientName;
+                cout << "Enter invoice amount: $";
+                cin >> amount;
+
+                // Generate invoice
+                invoiceManager.generateInvoice(patientName, amount);
+                break;
+
+            case 17:
+                // Display invoices
+                invoiceManager.displayInvoices();
+                break;
+
+            case 18:
+                // Prompt for patient name and medication
+                cout << "Enter patient name: ";
+                cin >> patientName;
+                cout << "Enter medication: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, medication);
+
+                // Add medication
+                medicationManager.addMedication(patientName, medication);
+                break;
+
+            case 19:
+                // Prompt for patient name and display medication
+                cout << "Enter patient name: ";
+                cin >> patientName;
+
+                // Display medication
+                medicationManager.displayMedication(patientName);
+                break;
+
+            case 20:
+                // Prompt for patient name and lab test results
+                cout << "Enter patient name: ";
+                cin >> patientName;
+                cout << "Enter lab test results: ";
+                cin.ignore(); // Clear buffer
+                getline(cin, testResults);
+
+                // Add lab test results
+                labTestManager.addLabTestResults(patientName, testResults);
+                break;
+
+            case 21:
+                // Prompt for patient name and display lab test results
+                cout << "Enter patient name: ";
+                cin >> patientName;
+
+                // Display lab test results
+                labTestManager.displayLabTestResults(patientName);
+                break;
+
+            case 22:
+                // Prompt for patient name to search
+                cout << "Enter patient name to search: ";
+                cin >> name;
+
+                // Search patient record by name
+                recordSearch.searchByName(name);
+                break;
+
+            case 23:
+                // Prompt for date of birth to search
+                cout << "Enter date of birth to search (DD/MM/YYYY): ";
+                cin >> dob;
+
+                // Search patient record by date of birth
+                recordSearch.searchByDOB(dob);
+                break;
+
+            case 24:
+                continueLoop = false;
+                break;
+
+            default:
+                cout << "Invalid choice. Please enter a number between 1 and 24." << endl;
+                break;
+        }
+    }
+
+    cout << "Exiting..." << endl;
+
+    return 0;
+}
