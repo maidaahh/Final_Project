@@ -343,3 +343,43 @@ public:
         }
     }
 };
+
+// Class for searching patient records
+class PatientRecordSearch {
+private:
+    map<string, pair<string, string>> patientDetails; // name -> (contact, date of birth) mapping
+
+public:
+    // Method to search patient record by name
+    void searchByName(const string& name) {
+        map<string, pair<string, string>>::iterator it = patientDetails.find(name);
+        if (it != patientDetails.end()) {
+            cout << "Patient Found:" << endl;
+            cout << "Name: " << it->first << endl;
+            cout << "Contact: " << it->second.first << endl;
+            cout << "Date of Birth: " << it->second.second << endl;
+        } else {
+            cout << "Patient not found." << endl;
+        }
+    }
+
+    // Method to search patient record by date of birth
+    void searchByDOB(const string& dob) {
+        for (const auto& patient : patientDetails) {
+            if (patient.second.second == dob) {
+                cout << "Patient Found:" << endl;
+                cout << "Name: " << patient.first << endl;
+                cout << "Contact: " << patient.second.first << endl;
+                cout << "Date of Birth: " << patient.second.second << endl;
+                return;
+            }
+        }
+        cout << "Patient not found." << endl;
+    }
+
+    // Method to add patient details
+    void addPatientDetails(const string& name, const string& contact, const string& dob) {
+        patientDetails[name] = make_pair(contact, dob);
+        cout << "Patient details added successfully!" << endl;
+    }
+};
