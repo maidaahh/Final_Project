@@ -178,3 +178,39 @@ public:
         }
     }
 };
+
+// Class for appointment scheduling
+class AppointmentScheduler {
+private:
+    map<string, string> appointments; // date -> patient name mapping
+
+public:
+    // Method to schedule an appointment
+    void scheduleAppointment(const string& date, const string& patientName) {
+        appointments[date] = patientName;
+        cout << "Appointment scheduled successfully!" << endl;
+    }
+
+    // Method to cancel an appointment
+    void cancelAppointment(const string& date) {
+        map<string, string>::iterator it = appointments.find(date);
+        if (it != appointments.end()) {
+            appointments.erase(it);
+            cout << "Appointment canceled successfully!" << endl;
+        } else {
+            cout << "No appointment found on that date." << endl;
+        }
+    }
+
+    // Method to display scheduled appointments
+    void displayAppointments() {
+        if (appointments.empty()) {
+            cout << "No appointments scheduled." << endl;
+        } else {
+            cout << "Scheduled Appointments:" << endl;
+            for (const auto& appointment : appointments) {
+                cout << "Date: " << appointment.first << ", Patient: " << appointment.second << endl;
+            }
+        }
+    }
+};
