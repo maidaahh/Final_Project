@@ -74,3 +74,29 @@ public:
         }
     }
 };
+
+
+// Class for doctor registration
+class DoctorRegistration {
+private:
+    map<string, pair<string, string>> doctorDetails; // name -> (contact, specialization) mapping
+
+public:
+    // Method to register a new doctor
+    void registerDoctor(const string& name, const string& contact, const string& specialization) {
+        doctorDetails[name] = make_pair(contact, specialization);
+        cout << "Doctor " << name << " registered successfully!" << endl;
+    }
+
+    // Method to display doctor details
+    void displayDoctorDetails(const string& name) {
+        map<string, pair<string, string>>::iterator it = doctorDetails.find(name);
+        if (it != doctorDetails.end()) {
+            cout << "Name: " << it->first << endl;
+            cout << "Contact: " << it->second.first << endl;
+            cout << "Specialization: " << it->second.second << endl;
+        } else {
+            cout << "Doctor not found." << endl;
+        }
+    }
+};
