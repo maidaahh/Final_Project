@@ -240,3 +240,29 @@ public:
         }
     }
 };
+
+// Class for managing medical history
+class MedicalHistory {
+private:
+    map<string, vector<string>> medicalHistory; // patient name -> list of medical history entries
+
+public:
+    // Method to add a medical history entry
+    void addMedicalHistory(const string& patientName, const string& entry) {
+        medicalHistory[patientName].push_back(entry);
+        cout << "Medical history entry added successfully!" << endl;
+    }
+
+    // Method to display medical history for a patient
+    void displayMedicalHistory(const string& patientName) {
+        map<string, vector<string>>::iterator it = medicalHistory.find(patientName);
+        if (it != medicalHistory.end()) {
+            cout << "Medical History of " << patientName << ":" << endl;
+            for (const string& entry : it->second) {
+                cout << "- " << entry << endl;
+            }
+        } else {
+            cout << "Medical history for " << patientName << " not found." << endl;
+        }
+    }
+};
