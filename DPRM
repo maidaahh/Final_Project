@@ -126,3 +126,29 @@ public:
         }
     }
 };
+
+// Class for doctor history
+class DoctorHistory {
+private:
+    map<string, vector<string>> doctorHistory; // name -> list of doctor history entries
+
+public:
+    // Method to add doctor history
+    void addDoctorHistory(const string& name, const string& history) {
+        doctorHistory[name].push_back(history);
+        cout << "Doctor history added successfully!" << endl;
+    }
+
+    // Method to display doctor history
+    void displayDoctorHistory(const string& name) {
+        map<string, vector<string>>::iterator it = doctorHistory.find(name);
+        if (it != doctorHistory.end()) {
+            cout << "History of " << name << ":" << endl;
+            for (const string& entry : it->second) {
+                cout << "- " << entry << endl;
+            }
+        } else {
+            cout << "Doctor not found." << endl;
+        }
+    }
+};
