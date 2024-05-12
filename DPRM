@@ -291,3 +291,29 @@ public:
         }
     }
 };
+
+// Class for managing medication
+class MedicationManager {
+private:
+    map<string, vector<string>> medications; // patient name -> list of medications
+
+public:
+    // Method to add medication for a patient
+    void addMedication(const string& patientName, const string& medication) {
+        medications[patientName].push_back(medication);
+        cout << "Medication added successfully!" << endl;
+    }
+
+    // Method to display medication for a patient
+    void displayMedication(const string& patientName) {
+        map<string, vector<string>>::iterator it = medications.find(patientName);
+        if (it != medications.end()) {
+            cout << "Medication for " << patientName << ":" << endl;
+            for (const string& med : it->second) {
+                cout << "- " << med << endl;
+            }
+        } else {
+            cout << "Medication for " << patientName << " not found." << endl;
+        }
+    }
+};
