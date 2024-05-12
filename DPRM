@@ -266,3 +266,28 @@ public:
         }
     }
 };
+
+// Class for managing invoices
+class InvoiceManager {
+private:
+    map<string, double> invoices; // patient name -> invoice amount mapping
+
+public:
+    // Method to generate an invoice for a patient
+    void generateInvoice(const string& patientName, double amount) {
+        invoices[patientName] += amount;
+        cout << "Invoice generated successfully!" << endl;
+    }
+
+    // Method to display invoices
+    void displayInvoices() {
+        if (invoices.empty()) {
+            cout << "No invoices found." << endl;
+        } else {
+            cout << "Invoices:" << endl;
+            for (const auto& invoice : invoices) {
+                cout << "Patient: " << invoice.first << ", Amount: $" << invoice.second << endl;
+            }
+        }
+    }
+};
