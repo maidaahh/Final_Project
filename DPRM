@@ -48,3 +48,29 @@ public:
         cout << "User added successfully!" << endl;
     }
 };
+
+
+// Class for patient registration
+class PatientRegistration {
+private:
+    map<string, pair<string, string>> patientDetails; // name -> (contact, date of birth) mapping
+
+public:
+    // Method to register a new patient
+    void registerPatient(const string& name, const string& contact, const string& dob) {
+        patientDetails[name] = make_pair(contact, dob);
+        cout << "Patient " << name << " registered successfully!" << endl;
+    }
+
+    // Method to display patient details
+    void displayPatientDetails(const string& name) {
+        map<string, pair<string, string>>::iterator it = patientDetails.find(name);
+        if (it != patientDetails.end()) {
+            cout << "Name: " << it->first << endl;
+            cout << "Contact: " << it->second.first << endl;
+            cout << "Date of Birth: " << it->second.second << endl;
+        } else {
+            cout << "Patient not found." << endl;
+        }
+    }
+};
